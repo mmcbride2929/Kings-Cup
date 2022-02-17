@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+button {
+  height: 200px;
+  width: 200px;
+}
+
+.active {
+  display: none;
+}
+
+.hide {
+  display: none;
+}
+
+.player-btn {
+  height: 100px;
+  color: white;
+  font-size: 2rem;
+  border: 1px solid whitesmoke;
+  width: 100px;
+  background: green;
+}
