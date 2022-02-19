@@ -1,0 +1,3 @@
+draw card change to fetchCard
+make draw card happen if first if statement in event listener triggers.
+create a gameover function for the else statement

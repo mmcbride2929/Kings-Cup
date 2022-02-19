@@ -1,61 +1,72 @@
 import fetchDeckId from '../utils/fetchDeckId.js'
-import drawCard from '../utils/drawCard.js'
-import displayRule from '../utils/displayRule.js'
+import fetchCard from '../utils/fetchCard.js'
 import tabPop from '../utils/tabPop.js'
-import choosePlayers from '../utils/choosePlayers.js'
+import trackTurn from '../utils/trackTurn.js'
+import trackPlayer from '../utils/trackPlayer.js'
+import drawCard from '../utils/drawCard.js'
+import displayCard from '../utils/displayCard.js'
+import displayGameOver from '../utils/displayGameOver.js'
+import hideGameOver from '../utils/hideGameOver.js'
+import displayGameStart from '../utils/displayGameStart.js'
 
 const drawBtn = document.querySelector('.draw-btn')
-const cardImage = document.querySelector('.card-img')
-const cardValue = document.querySelector('.card-value')
-const cardSuit = document.querySelector('.card-suit')
+const currentPlayerHeader = document.querySelector('.current-player-header')
 const restart = document.querySelector('.restart')
 const gameOverAlert = document.querySelector('.game-over-alert')
+const loserNotification = document.querySelector('.loser-notification')
+const playerBtns = document.querySelectorAll('.player-btn')
+const choosePlayerSection = document.querySelector('.choose-player-amount')
 
 // fetching our deck object, and getting our deck ID
 let deckObject = await fetchDeckId()
 let deckId = deckObject.deck_id
-let cardsRemaining = document.querySelector('.cards-remaining')
 
 // getting an int that will randomly pop tab
 let gameOver = tabPop()
+let turnCount = 1
+let playerTotal = 1
+let currentPlayer = 1
 
-// tracking our turns
-let turnCount = 0
+playerBtns.forEach((btn) => {
+  btn.addEventListener('click', (e) => {
+    playerTotal = parseInt(e.target.innerText)
 
-// waiting for player to choose player amount...
-choosePlayers()
+    // can now draw cards and see player details
+    displayGameStart(drawBtn, currentPlayerHeader, choosePlayerSection)
+  })
+})
 
-// listening for clicks, onClick draw a card
+// listening for clicks to draw a card
 drawBtn.addEventListener('click', async () => {
   if (turnCount < gameOver) {
-    turnCount++
+    //fetching our card, getting a card object back
+    const cardObject = await fetchCard(deckId)
 
-    //drawing our card, getting a card object back
-    const cardObject = await drawCard(deckId)
+    // drawing card
+    const card = drawCard(cardObject)
 
-    // getting cards left from card object
-    cardsRemaining.innerText = cardObject.remaining
+    // incrementing our turn
+    turnCount = trackTurn(turnCount)
 
-    // getting card from card object, and destructuring
-    const card = cardObject.cards[0]
-    const { image, suit, value } = card
+    // tracking our current player
+    currentPlayer = trackPlayer(currentPlayer, playerTotal, loserNotification)
 
-    cardImage.src = image
-    cardValue.innerText = value
-    cardSuit.innerText = suit
-
-    // calling the display rule func + passing the card value
-    displayRule(value)
+    // displaying card
+    displayCard(card)
   } else {
-    // revealing game over elements
-    gameOverAlert.classList.remove('active')
-    restart.classList.remove('active')
+    displayGameOver(
+      drawBtn,
+      restart,
+      gameOverAlert,
+      loserNotification,
+      currentPlayer
+    )
   }
 })
 
 // event listener for restart button
 restart.addEventListener('click', async () => {
-  //// fetching our new deck object, and getting our deck ID
+  // fetching our new deck obj, and getting deck ID
   deckObject = await fetchDeckId()
   deckId = deckObject.deck_id
 
@@ -63,35 +74,23 @@ restart.addEventListener('click', async () => {
   gameOver = tabPop()
 
   // resetting our turns
-  turnCount = 0
+  turnCount = 1
 
+  // setting a default value for players
+  playerTotal = 1
+  currentPlayer = 1
+
+  hideGameOver(restart, gameOverAlert, loserNotification, currentPlayerHeader)
   // hiding our game over elements
-  gameOverAlert.classList.add('active')
-  restart.classList.add('active')
 
-  // clearing the card details and image from dom
-  cardImage.src = ''
-  cardValue.innerText = ''
-  cardSuit.innerText = ''
+  displayCard('reset')
 
-  // clearing the game rules
-  displayRule('CLEAR')
+  // tracking turns passed
+  trackTurn(0)
 
-  // resetting cards remaining
-  cardsRemaining.innerText = 52
+  // resetting current player text
+  trackPlayer(0, 1)
+
+  // display buttons after restart
+  choosePlayerSection.classList.remove('hide')
 })
-
-// if playersSet === false, modal needs to be up
-// select player amount. do flexbox of 6 boxes.
-//onclick dissppear modal, set playersSet to true,
-// take player input amount and store amount in var.
-// have a function called player tracker
-// func takes amount of player,.. increment on draw card.. and if player amount matches player counter, restart to player one.
-
-// track and declare winner
-
-// restart function and adding back .active
-
-// on click..reset players, modal pops up,.
-// get a new deck id, new deck, hide suits,card, hide
-// restart

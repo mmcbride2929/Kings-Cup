@@ -9,10 +9,6 @@ button {
   width: 200px;
 }
 
-.active {
-  display: none;
-}
-
 .hide {
   display: none;
 }
