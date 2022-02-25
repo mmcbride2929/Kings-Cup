@@ -1,3 +1,27 @@
-draw card change to fetchCard
-make draw card happen if first if statement in event listener triggers.
-create a gameover function for the else statement
+need to display gameover on bust.
+
+
+
+
+  // clearing the card details and image from dom
+  // if (card === 'reset') {
+  //   cardImage.src = ''
+  //   cardValue.innerText = ''
+
+  //   // hiding elements
+  //   // cardImage.classList.add('hide')
+  //   // cardValue.classList.add('hide')
+  //   // ruleContainer.classList.add('hide')
+
+  //   //  clearing the game rules
+  //   displayRule('CLEAR')
+  // } else {
+  
+    // displaying card img and value
+
+    // cardValue.classList.remove('hide')
+    // ruleContainer.classList.remove('hide')
+    // cardPlaceholder.classList.add('hide')
+
+    
+  

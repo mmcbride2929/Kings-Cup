@@ -7,7 +7,9 @@ import drawCard from '../utils/drawCard.js'
 import displayCard from '../utils/displayCard.js'
 import displayGameOver from '../utils/displayGameOver.js'
 import hideGameOver from '../utils/hideGameOver.js'
-import displayGameStart from '../utils/displayGameStart.js'
+import hideChoosePlayer from '../utils/hideChoosePlayer.js'
+import displayGameDetails from '../utils/displayGameDetails.js'
+import displayRule from '../utils/displayRule.js'
 
 const drawBtn = document.querySelector('.draw-btn')
 const currentPlayerHeader = document.querySelector('.current-player-header')
@@ -15,7 +17,11 @@ const restart = document.querySelector('.restart')
 const gameOverAlert = document.querySelector('.game-over-alert')
 const loserNotification = document.querySelector('.loser-notification')
 const playerBtns = document.querySelectorAll('.player-btn')
-const choosePlayerSection = document.querySelector('.choose-player-amount')
+const choosePlayerAmount = document.querySelector('.choose-player-amount')
+const playContainer = document.querySelector('.play-container')
+const ruleContainer = document.querySelector('.rule-container')
+const cardPlaceholder = document.querySelector('.card-placeholder')
+const gamePlayContainer = document.querySelector('.gameplay-container')
 
 // fetching our deck object, and getting our deck ID
 let deckObject = await fetchDeckId()
@@ -31,8 +37,11 @@ playerBtns.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     playerTotal = parseInt(e.target.innerText)
 
+    // hide choose player function
+    hideChoosePlayer(choosePlayerAmount)
+
     // can now draw cards and see player details
-    displayGameStart(drawBtn, currentPlayerHeader, choosePlayerSection)
+    displayGameDetails(gamePlayContainer)
   })
 })
 
@@ -53,13 +62,18 @@ drawBtn.addEventListener('click', async () => {
 
     // displaying card
     displayCard(card)
+    cardPlaceholder.classList.add('hide')
+
+    // displaying rule
+    displayRule(card)
   } else {
     displayGameOver(
       drawBtn,
       restart,
       gameOverAlert,
       loserNotification,
-      currentPlayer
+      currentPlayer,
+      playContainer
     )
   }
 })
@@ -80,10 +94,16 @@ restart.addEventListener('click', async () => {
   playerTotal = 1
   currentPlayer = 1
 
-  hideGameOver(restart, gameOverAlert, loserNotification, currentPlayerHeader)
+  hideGameOver(
+    restart,
+    gameOverAlert,
+    loserNotification,
+    currentPlayerHeader,
+    playContainer
+  )
   // hiding our game over elements
 
-  displayCard('reset')
+  // card reset goes here if needed
 
   // tracking turns passed
   trackTurn(0)
@@ -92,5 +112,5 @@ restart.addEventListener('click', async () => {
   trackPlayer(0, 1)
 
   // display buttons after restart
-  choosePlayerSection.classList.remove('hide')
+  // choosePlayerAmount.classList.remove('hide')
 })

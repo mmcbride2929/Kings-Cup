@@ -1,8 +1,12 @@
 const rule = document.querySelector('.rule')
 const ruleDescription = document.querySelector('.rule-description')
 
-const displayRule = (cardValue) => {
-  switch (cardValue) {
+const displayRule = (card) => {
+  // displaying our hidden elements
+  // rule.classList.remove('hide')
+  //  ruleDescription.classList.remove('hide')
+  const { value } = card
+  switch (value) {
     case 'ACE':
       rule.innerText = 'Social'
       ruleDescription.innerText = 'Everyone drinks'
@@ -63,9 +67,10 @@ const displayRule = (cardValue) => {
         'the King creates a rule.. if someone breaks it, drink.'
       break
     case 'CLEAR':
-      rule.innerText = ''
-      ruleDescription.innerText = ''
-      break
+    // displaying our hidden elements
+    // rule.classList.add('hide')
+    // ruleDescription.classList.add('hide')
+    // break
     default:
       console.log('ERROR')
   }
