@@ -30,9 +30,9 @@ let deckId = deckObject.deck_id
 let gameOver = tabPop()
 
 // setting game default values
-let turnCount = 1
-let playerTotal = 1
-let currentPlayer = 1
+let turnCount = 0
+let playerTotal = 0
+let currentPlayer = 0
 
 // listening for player to choose player amt
 playerBtns.forEach((btn) => {
@@ -91,11 +91,11 @@ restart.forEach((btn) => {
     gameOver = tabPop()
 
     // resetting our turns
-    turnCount = 1
+    turnCount = 0
 
     // setting a default value for players
-    playerTotal = 1
-    currentPlayer = 1
+    playerTotal = 0
+    currentPlayer = 0
 
     hideGameOver(gameOverContainer)
     // hiding our game over elements
