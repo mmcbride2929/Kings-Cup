@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Kings-Cup</title>
     <link rel="stylesheet" href="css/style.css" />
     <link
       rel="stylesheet"
@@ -18,45 +20,37 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&di=swap"
       rel="stylesheet"
     />
-    <title>Kings-Cup</title>
   </head>
-  <header>
-    <nav class="nav">
-      <i class="fa-solid fa-crown nav-logo"></i>
-      <ul class="nav-list">
-        <li><a href="/" class="list-item">HOME</a></li>
-        <li><a href="/how-to-play" class="list-item">HOW TO PLAY</a></li>
-      </ul>
-    </nav>
-  </header>
   <body>
-    <div class="body-header-container">
-      <i class="fa-solid fa-crown title-icon"></i>
-      <h1 class="page-header">KINGS CUP</h1>
-    </div>
-    <div class="tag-line-container">
-      <h3>No Cards?</h3>
-      <h3>No Problem</h3>
-    </div>
-    <section class="game-board">
-      <!-- CHOOSE PLAYER AMOUNT -->
-      <div class="choose-player-amount">
-        <h3>Choose Player Amount</h3>
-        <div>
-          <h5 class="player-btn">1</h5>
-          <h5 class="player-btn">2</h5>
-          <h5 class="player-btn">3</h5>
-        </div>
-        <div>
-          <h5 class="player-btn">4</h5>
-          <h5 class="player-btn">5</h5>
-          <h5 class="player-btn">6</h5>
-        </div>
+    <header><app-navbar></app-navbar></header>
+    <main class="index-main">
+      <div class="body-header-container">
+        <i class="fa-solid fa-crown title-icon"></i>
+        <h1 class="page-header">KINGS CUP</h1>
       </div>
+      <div class="tag-line-container">
+        <h3>No Cards?</h3>
+        <h3>No Problem</h3>
+      </div>
+      <section class="game-board">
+        <!-- CHOOSE PLAYER AMOUNT -->
+        <div class="choose-player-amount">
+          <h3>Choose Player Amount</h3>
+          <div>
+            <h5 class="player-btn">1</h5>
+            <h5 class="player-btn">2</h5>
+            <h5 class="player-btn">3</h5>
+          </div>
+          <div>
+            <h5 class="player-btn">4</h5>
+            <h5 class="player-btn">5</h5>
+            <h5 class="player-btn">6</h5>
+          </div>
+        </div>
 
-      <div class="gameplay-container hide">
-        <!-- track player/turn + reset/draw button -->
-        <div class="turn-container">
+        <!-- gameplay container -->
+        <div class="gameplay-container hide">
+          <!-- track player/turn + reset/draw button -->
           <div class="player-turn-tracker">
             <h4 class="current-player-header">
               Player
@@ -71,35 +65,39 @@
             <button class="draw-btn">Draw</button>
             <button class="restart">RESTART</button>
           </div>
-        </div>
-        <div class="image-container">
-          <div class="card-placeholder"></div>
-          <img src="" alt="" class="card-img hide" />
-        </div>
 
-        <!-- CARD/RULE DETAILS -->
-        <div class="details-container hide">
-          <div class="rule-container">
-            <h2 class="card-value"></h2>
-            <span class="hyphen"> - </span>
-            <h2 class="rule"></h2>
+          <div class="image-container">
+            <div class="card-placeholder"></div>
+            <img src="" alt="" class="card-img hide" />
           </div>
-          <h3 class="rule-description"></h3>
-        </div>
-      </div>
-      <!-- GAMEOVER -->
-      <div class="game-over-container hide">
-        <h2 class="game-over-alert">GAME OVER</h2>
 
-        <h2 class="loser-notification">
-          Player<span class="losing-player">1</span> Loses! DRINK!
-        </h2>
-      </div>
-    </section>
+          <!-- CARD/RULE DETAILS -->
+          <div class="details-container hide">
+            <div class="rule-container">
+              <h2 class="card-value"></h2>
+              <span class="hyphen"> - </span>
+              <h2 class="rule"></h2>
+            </div>
+            <div class="rule-desc-container">
+              <h3 class="rule-description"></h3>
+            </div>
+          </div>
+        </div>
+        <!-- GAMEOVER -->
+        <div class="game-over-container hide">
+          <i class="fa-solid fa-beer-mug-empty"></i>
+          <p>The tab popped on turn<span class="gameover-turn"></span>!</p>
+          <h2 class="game-over-alert">GAME OVER</h2>
+
+          <h2 class="loser-notification">
+            Player<span class="losing-player">1</span>Loses! DRINK!
+          </h2>
+          <button class="restart res-last">RESTART</button>
+        </div>
+      </section>
+    </main>
+    <app-footer></app-footer>
   </body>
-  <footer>
-    <i class="fa-solid fa-crown"></i>
-    <h5>KINGS CUP</h5>
-  </footer>
   <script type="module" src="app/index.js"></script>
+  <script src="./components/components.js"></script>
 </html>

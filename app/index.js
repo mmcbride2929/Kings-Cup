@@ -7,19 +7,18 @@ import drawCard from '../utils/drawCard.js'
 import displayCard from '../utils/displayCard.js'
 import displayGameOver from '../utils/displayGameOver.js'
 import hideGameOver from '../utils/hideGameOver.js'
+import displayChoosePlayerAmount from '../utils/displayChoosePlayerAmount.js'
 import hideChoosePlayer from '../utils/hideChoosePlayer.js'
-import displayGameDetails from '../utils/displayGameDetails.js'
+import displayGamePlayContainer from '../utils/displayGamePlayContainer.js'
 import displayRule from '../utils/displayRule.js'
+import hideGamePlayContainer from '../utils/hideGamePlayContainer.js'
 
 const drawBtn = document.querySelector('.draw-btn')
-const currentPlayerHeader = document.querySelector('.current-player-header')
-const restart = document.querySelector('.restart')
-const gameOverAlert = document.querySelector('.game-over-alert')
+const restart = document.querySelectorAll('.restart')
+const gameOverContainer = document.querySelector('.game-over-container')
 const loserNotification = document.querySelector('.loser-notification')
 const playerBtns = document.querySelectorAll('.player-btn')
 const choosePlayerAmount = document.querySelector('.choose-player-amount')
-const playContainer = document.querySelector('.play-container')
-const ruleContainer = document.querySelector('.rule-container')
 const cardPlaceholder = document.querySelector('.card-placeholder')
 const gamePlayContainer = document.querySelector('.gameplay-container')
 
@@ -29,10 +28,13 @@ let deckId = deckObject.deck_id
 
 // getting an int that will randomly pop tab
 let gameOver = tabPop()
+
+// setting game default values
 let turnCount = 1
 let playerTotal = 1
 let currentPlayer = 1
 
+// listening for player to choose player amt
 playerBtns.forEach((btn) => {
   btn.addEventListener('click', (e) => {
     playerTotal = parseInt(e.target.innerText)
@@ -41,7 +43,9 @@ playerBtns.forEach((btn) => {
     hideChoosePlayer(choosePlayerAmount)
 
     // can now draw cards and see player details
-    displayGameDetails(gamePlayContainer)
+    displayGamePlayContainer(gamePlayContainer)
+
+    cardPlaceholder.classList.remove('hide')
   })
 })
 
@@ -67,50 +71,44 @@ drawBtn.addEventListener('click', async () => {
     // displaying rule
     displayRule(card)
   } else {
-    displayGameOver(
-      drawBtn,
-      restart,
-      gameOverAlert,
-      loserNotification,
-      currentPlayer,
-      playContainer
-    )
+    // hiding all gameplay elements
+    hideGamePlayContainer(gamePlayContainer)
+
+    // displaying game-over modal
+    displayGameOver(gameOverContainer, turnCount, currentPlayer)
   }
 })
 
 // event listener for restart button
-restart.addEventListener('click', async () => {
-  // fetching our new deck obj, and getting deck ID
-  deckObject = await fetchDeckId()
-  deckId = deckObject.deck_id
+restart.forEach((btn) => {
+  console.log('df')
+  btn.addEventListener('click', async () => {
+    // fetching our new deck obj, and getting deck ID
+    deckObject = await fetchDeckId()
+    deckId = deckObject.deck_id
 
-  // getting new int that will randomly pop tab
-  gameOver = tabPop()
+    // getting new int that will randomly pop tab
+    gameOver = tabPop()
 
-  // resetting our turns
-  turnCount = 1
+    // resetting our turns
+    turnCount = 1
 
-  // setting a default value for players
-  playerTotal = 1
-  currentPlayer = 1
+    // setting a default value for players
+    playerTotal = 1
+    currentPlayer = 1
 
-  hideGameOver(
-    restart,
-    gameOverAlert,
-    loserNotification,
-    currentPlayerHeader,
-    playContainer
-  )
-  // hiding our game over elements
+    hideGameOver(gameOverContainer)
+    // hiding our game over elements
 
-  // card reset goes here if needed
+    // tracking turns passed
+    trackTurn(0)
 
-  // tracking turns passed
-  trackTurn(0)
+    // resetting current player text
+    trackPlayer(0, 1)
 
-  // resetting current player text
-  trackPlayer(0, 1)
+    displayChoosePlayerAmount(choosePlayerAmount)
 
-  // display buttons after restart
-  // choosePlayerAmount.classList.remove('hide')
+    displayCard('reset')
+    hideGamePlayContainer(gamePlayContainer)
+  })
 })

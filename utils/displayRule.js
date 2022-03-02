@@ -2,9 +2,6 @@ const rule = document.querySelector('.rule')
 const ruleDescription = document.querySelector('.rule-description')
 
 const displayRule = (card) => {
-  // displaying our hidden elements
-  // rule.classList.remove('hide')
-  //  ruleDescription.classList.remove('hide')
   const { value } = card
   switch (value) {
     case 'ACE':
@@ -44,7 +41,7 @@ const displayRule = (card) => {
     case '9':
       rule.innerText = 'Rhyme'
       ruleDescription.innerText =
-        "Pick a word, and others must say a word that rhymes with it. The  first who doesn't drinks."
+        "Pick a word. Each player must say a word that ryhmes. If you can't, drink"
       break
     case '10':
       rule.innerText = 'Categories'
@@ -66,11 +63,6 @@ const displayRule = (card) => {
       ruleDescription.innerText =
         'the King creates a rule.. if someone breaks it, drink.'
       break
-    case 'CLEAR':
-    // displaying our hidden elements
-    // rule.classList.add('hide')
-    // ruleDescription.classList.add('hide')
-    // break
     default:
       console.log('ERROR')
   }
