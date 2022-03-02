@@ -7,9 +7,3 @@
 ## Architecture & Libraries
 * Vanilla JS
 
-## Quick Start
-Clone the git repo & install dependencies from npm:
-* git clone: https://github.com/mmcbride2929/kings-cup.git
-* cd /kings-cup
-* ```npm install```
-* ```npm start```
